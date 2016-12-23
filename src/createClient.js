@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import FastClick from 'fastclick';
+// import FastClick from 'fastclick';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { AppContainer as Hot } from 'react-hot-loader';
@@ -33,7 +33,7 @@ const createClient = ({
   let timer;
 
   // Make taps on links and buttons work fast on mobiles
-  FastClick.attach(document.body);
+  // FastClick.attach(document.body);
 
   /**
    * Callback function handling frontend route changes.

@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "babel-starter-kit",
+  "name": "react-universal-builder",
   "version": "0.0.0",
   "description": "A project template for authoring and publishing JavaScript libraries",
   "homepage": "https://www.kriasoft.com/babel-starter-kit/",
-  "repository": "kriasoft/babel-starter-kit",
-  "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
+  "repository": "unkleho/react-universal-builder",
+  "author": "Kaho Cheung <kaho@elefanttraks.com> (https://www.kahocheung.com)",
   "contributors": [
     "Konstantin Tarkus <hello@tarkus.me>",
     "Vladimir Kutepov <frenzzy.man@gmail.com>"
@@ -30,18 +30,20 @@
   },
   "dependencies": {
     "apollo-client": "^0.5.24",
-    "babel-polyfill": "^6.20.0",
-    "babel-runtime": "^6.11.6",
-    "express": "^4.14.0",
+    "babel-polyfill": "6.16.0",
+    "babel-runtime": "6.18.0",
+    "express": "4.13.3",
+    "fastclick": "^1.0.6",
     "isomorphic-fetch": "^2.2.1",
     "path": "^0.12.7",
     "react": "^15.4.1",
-    "react-apollo": "^0.7.2",
+    "react-apollo": "^0.5.16",
     "react-dom": "^15.4.1",
     "react-helmet": "^3.2.3",
     "react-hot-loader": "^1.3.1",
     "react-redux": "^5.0.1",
-    "react-router": "^3.0.0"
+    "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.7"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -59,6 +61,7 @@
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
     "istanbul": "^1.1.0-alpha.1",
+    "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",
