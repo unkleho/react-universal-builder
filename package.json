@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "keywords": [],
-  "main": "index.js",
+  "main": "dist/index.js",
   "jsnext:main": "index.es.js",
   "babel": {
     "presets": [
