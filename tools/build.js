@@ -25,12 +25,14 @@ promise = promise.then(() => del(['dist/*']));
   promise = promise.then(() => rollup.rollup({
     entry: 'src/index.js',
     external: Object.keys(pkg.dependencies),
-    plugins: [babel(Object.assign(pkg.babel, {
+    plugins: [
+      babel(Object.assign(pkg.babel, {
       babelrc: false,
       exclude: 'node_modules/**',
       runtimeHelpers: true,
       presets: pkg.babel.presets.map(x => (x === 'latest' ? ['latest', { es2015: { modules: false } }] : x)),
-    }))],
+    }))
+  ],
   }).then(bundle => bundle.write({
     dest: `dist/${format === 'cjs' ? 'index' : `index.${format}`}.js`,
     format,
