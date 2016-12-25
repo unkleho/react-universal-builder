@@ -17,16 +17,20 @@ import AssetsPlugin from 'assets-webpack-plugin';
 const isDebug = !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose');
 
+const sourcePath = '../../../react-universal-builder-starter-kit/src';
+const buildPath = '../../../react-universal-builder-starter-kit/build';
+
 //
 // Common configuration chunk to be used for both
 // client-side (client.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
 
 const config = {
-  context: path.resolve(__dirname, '../src'),
+  context: sourcePath,
 
   output: {
-    path: path.resolve(__dirname, '../build/public/assets'),
+    // path: path.resolve(__dirname, '../build/public/assets'),
+    path: `${buildPath}/public/assets`,
     publicPath: '/assets/',
     sourcePrefix: '  ',
     pathinfo: isVerbose,
@@ -36,9 +40,9 @@ const config = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        loaders: ['react-hot', 'babel-loader'],
         include: [
-          path.resolve(__dirname, '../src'),
+          sourcePath,
         ],
         query: {
           // https://github.com/babel/babel-loader#options
@@ -125,11 +129,12 @@ const config = {
           limit: 10000,
         },
       },
+
     ],
   },
 
   resolve: {
-    root: path.resolve(__dirname, '../src'),
+    root: sourcePath,
     modulesDirectories: ['node_modules'],
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.json'],
     alias: {
@@ -232,7 +237,9 @@ const config = {
 
 const clientConfig = extend(true, {}, config, {
   entry: {
-    client: './client.js',
+    // client: './client.js',
+    // client: '../../../react-universal-builder-starter-kit/src/client.js',
+    client: `${sourcePath}/src/client.js`,
   },
 
   output: {
@@ -277,7 +284,7 @@ const clientConfig = extend(true, {}, config, {
     // Emit a file with assets paths
     // https://github.com/sporto/assets-webpack-plugin#options
     new AssetsPlugin({
-      path: path.resolve(__dirname, '../build'),
+      path: buildPath,
       filename: 'assets.js',
       processOutput: x => `module.exports = ${JSON.stringify(x, null, 2)};`,
     }),
@@ -338,7 +345,8 @@ const clientConfig = extend(true, {}, config, {
 
 const serverConfig = extend(true, {}, config, {
   entry: {
-    server: './server.js',
+    // server: './server.js',
+    server: `${sourcePath}/server.js`,
   },
 
   output: {
