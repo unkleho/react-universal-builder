@@ -1,6 +1,6 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import React from 'react';
@@ -14,6 +14,10 @@ import { getDataFromTree } from 'react-apollo/server';
 import fetch from 'isomorphic-fetch'; // Required for Apollo
 import Helmet from 'react-helmet';
 
+//https://github.com/babel/babel/issues/1019
+if (!global._babelPolyfill) {
+  require('babel-polyfill');
+}
 const createServer = ({
   assets,
   Router,
