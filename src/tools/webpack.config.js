@@ -17,8 +17,8 @@ import AssetsPlugin from 'assets-webpack-plugin';
 const isDebug = !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose');
 
-const sourcePath = '../../../react-universal-builder-starter-kit/src';
-const buildPath = '../../../react-universal-builder-starter-kit/build';
+const sourcePath = '/Users/kahocheung/Development/react-universal-builder-starter-kit/src';
+const buildPath = '/Users/kahocheung/Development/react-universal-builder-starter-kit/build';
 
 //
 // Common configuration chunk to be used for both
@@ -26,6 +26,7 @@ const buildPath = '../../../react-universal-builder-starter-kit/build';
 // -----------------------------------------------------------------------------
 
 const config = {
+  // context: path.resolve(__dirname, '../src'),
   context: sourcePath,
 
   output: {
@@ -40,48 +41,88 @@ const config = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel-loader'],
+        // loaders: ['react-hot', 'babel-loader'],
+        loaders: ['react-hot', 'babel-loader?' + JSON.stringify(
+          {
+            // https://github.com/babel/babel-loader#options
+            cacheDirectory: isDebug,
+
+            // https://babeljs.io/docs/usage/options/
+            babelrc: false,
+            presets: [
+              // Latest stable ECMAScript features
+              // https://github.com/babel/babel/tree/master/packages/babel-preset-latest
+              'latest',
+              // Experimental ECMAScript proposals
+              // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-0
+              'stage-0',
+              // JSX, Flow
+              // https://github.com/babel/babel/tree/master/packages/babel-preset-react
+              'react',
+              ...isDebug ? [] : [
+                // Optimize React code for the production build
+                // https://github.com/thejameskyle/babel-react-optimize
+                'react-optimize',
+              ],
+            ],
+            plugins: [
+              // Externalise references to helpers and builtins,
+              // automatically polyfilling your code without polluting globals.
+              // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
+              'transform-runtime',
+              'transform-decorators-legacy',
+              ...!isDebug ? [] : [
+                // Adds component stack to warning messages
+                // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
+                'transform-react-jsx-source',
+                // Adds __self attribute to JSX which React will use for some warnings
+                // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
+                'transform-react-jsx-self',
+              ],
+            ],
+          },
+        )],
         include: [
           sourcePath,
         ],
-        query: {
-          // https://github.com/babel/babel-loader#options
-          cacheDirectory: isDebug,
-
-          // https://babeljs.io/docs/usage/options/
-          babelrc: false,
-          presets: [
-            // Latest stable ECMAScript features
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-latest
-            'latest',
-            // Experimental ECMAScript proposals
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-0
-            'stage-0',
-            // JSX, Flow
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-react
-            'react',
-            ...isDebug ? [] : [
-              // Optimize React code for the production build
-              // https://github.com/thejameskyle/babel-react-optimize
-              'react-optimize',
-            ],
-          ],
-          plugins: [
-            // Externalise references to helpers and builtins,
-            // automatically polyfilling your code without polluting globals.
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
-            'transform-runtime',
-            'transform-decorators-legacy',
-            ...!isDebug ? [] : [
-              // Adds component stack to warning messages
-              // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
-              'transform-react-jsx-source',
-              // Adds __self attribute to JSX which React will use for some warnings
-              // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
-              'transform-react-jsx-self',
-            ],
-          ],
-        },
+        // query: {
+        //   // https://github.com/babel/babel-loader#options
+        //   cacheDirectory: isDebug,
+        //
+        //   // https://babeljs.io/docs/usage/options/
+        //   babelrc: false,
+        //   presets: [
+        //     // Latest stable ECMAScript features
+        //     // https://github.com/babel/babel/tree/master/packages/babel-preset-latest
+        //     'latest',
+        //     // Experimental ECMAScript proposals
+        //     // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-0
+        //     'stage-0',
+        //     // JSX, Flow
+        //     // https://github.com/babel/babel/tree/master/packages/babel-preset-react
+        //     'react',
+        //     ...isDebug ? [] : [
+        //       // Optimize React code for the production build
+        //       // https://github.com/thejameskyle/babel-react-optimize
+        //       'react-optimize',
+        //     ],
+        //   ],
+        //   plugins: [
+        //     // Externalise references to helpers and builtins,
+        //     // automatically polyfilling your code without polluting globals.
+        //     // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
+        //     'transform-runtime',
+        //     'transform-decorators-legacy',
+        //     ...!isDebug ? [] : [
+        //       // Adds component stack to warning messages
+        //       // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
+        //       'transform-react-jsx-source',
+        //       // Adds __self attribute to JSX which React will use for some warnings
+        //       // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
+        //       'transform-react-jsx-self',
+        //     ],
+        //   ],
+        // },
       },
       {
         test: /\.scss/,
@@ -239,7 +280,7 @@ const clientConfig = extend(true, {}, config, {
   entry: {
     // client: './client.js',
     // client: '../../../react-universal-builder-starter-kit/src/client.js',
-    client: `${sourcePath}/src/client.js`,
+    client: `${sourcePath}/client.js`,
   },
 
   output: {
