@@ -42,7 +42,7 @@ const config = {
       {
         test: /\.jsx?$/,
         // loaders: ['react-hot', 'babel-loader'],
-        loaders: ['react-hot', 'babel-loader?' + JSON.stringify(
+        loaders: ['react-hot-loader/webpack', 'babel-loader?' + JSON.stringify(
           {
             // https://github.com/babel/babel-loader#options
             cacheDirectory: isDebug,
@@ -211,7 +211,7 @@ const config = {
         require('lost'),
         require('postcss-custom-media'),
         require('postcss-import')({ addDependencyTo: bundler }),
-        require('precss')(),
+        // require('precss')(),
         // // Transfer @import rule by inlining content, e.g. @import 'normalize.css'
         // // https://github.com/jonathantneal/postcss-partial-import
         // require('postcss-partial-import')({ addDependencyTo: bundler }),
@@ -384,6 +384,8 @@ const clientConfig = extend(true, {}, config, {
 // Configuration for the server-side bundle (server.js)
 // -----------------------------------------------------------------------------
 
+const nodeExternals = require('webpack-node-externals');
+
 const serverConfig = extend(true, {}, config, {
   entry: {
     // server: './server.js',
@@ -405,6 +407,7 @@ const serverConfig = extend(true, {}, config, {
         !request.match(/\.(css|less|scss|sss)$/i);
       callback(null, Boolean(isExternal));
     },
+    nodeExternals(),
   ],
 
   plugins: [
