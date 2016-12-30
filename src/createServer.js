@@ -148,6 +148,8 @@ const createServer = ({
             // );
             // res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
 
+            // TODO: Add array of linked files for fonts, plugins.
+
             res.status(200);
             res.send(`
               <!doctype html>
@@ -158,9 +160,6 @@ const createServer = ({
                   ${head.meta}
                   ${head.link}
                   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                  <link rel="stylesheet" href="/components/font-awesome/css/font-awesome.min.css" />
-                  <link rel="stylesheet" href="/components/photoswipe/photoswipe.css" />
-                  <link rel="stylesheet" href="/components/photoswipe/default-skin/default-skin.css" />
                   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
                   <style>${[...css].join('')}</style>
                 </head>
